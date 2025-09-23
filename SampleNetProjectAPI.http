@@ -1,0 +1,6 @@
+@SampleNetProjectAPI_HostAddress = http://localhost:5159
+
+GET {{SampleNetProjectAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
