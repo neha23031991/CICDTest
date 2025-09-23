@@ -26,3 +26,12 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish -c Release -o ./publish
+    - name: Deploy to Server
+      run: |
+          # The runner is on the target machine, so we can just copy files
+          sudo rm -rf /var/www/my-api-app/*
+          sudo cp -r ./publish/* /var/www/my-api-app/
+          # Restart the API service
+          sudo systemctl restart kestrel-api.service
