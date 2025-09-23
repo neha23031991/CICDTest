@@ -11,7 +11,7 @@ on:
 jobs:
   build:
 
-    runs-on: myfirstdotnetrunner
+    runs-on: Self-hosted
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
