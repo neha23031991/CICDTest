@@ -14,6 +14,9 @@ jobs:
     runs-on: Self-hosted
     steps:
     - uses: actions/checkout@v4
+    - name: Clean up old .NET installation
+      run: |
+        sudo rm -rf /home/ec2-user/.dotnet/
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
