@@ -11,8 +11,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: myfirstdotnetrunner
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
