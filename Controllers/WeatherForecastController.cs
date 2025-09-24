@@ -29,5 +29,18 @@ namespace SampleNetProjectAPI.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("GetUserData/{username}")]
+        public IActionResult GetUserData(string username)
+        {
+            // This is vulnerable to SQL injection because it uses string concatenation.
+            var sqlQuery = "SELECT * FROM Users WHERE Username = '" + username + "'";
+        
+            // In a real application, this query would be executed against a database.
+            // An attacker could pass ' OR 1=1 --' as the username to bypass authentication
+            // and access all user data.
+        
+            return Ok(sqlQuery); 
+        }
     }
 }
