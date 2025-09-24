@@ -42,3 +42,33 @@ jobs:
       with:
         name: web-api
         path: deploy
+        
+  deploy:
+    needs: build
+    runs-on: [self-hosted, linux]
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: web-api
+
+    - name: Deploy to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "./"
+        target: "/home/actions-runner/my-app"
+
+    - name: Restart service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          sudo systemctl restart my-app
+          sudo systemctl status my-app
+
