@@ -13,18 +13,18 @@ jobs:
 
     runs-on: [self-hosted, linux]
 
-steps:
-- name: Checkout repository
-  uses: actions/checkout@v4
-- name: Set up .NET
-  run: |
-    echo "/home/actions-runner/.dotnet" >> $GITHUB_PATH
-    echo "Successfully added .NET SDK to PATH"
-    dotnet --version
-      with:
-        dotnet-version: 8.0.x
-- name: Restore dependencies
-  run: dotnet restore
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Set up .NET
+      run: |
+        echo "/home/actions-runner/.dotnet" >> $GITHUB_PATH
+        echo "Successfully added .NET SDK to PATH"
+        dotnet --version
+          with:
+            dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
