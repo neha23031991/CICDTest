@@ -29,7 +29,18 @@ namespace SampleNetProjectAPI.Controllers
             })
             .ToArray();
         }
-
+        [HttpPost("DeserializeData")]
+        public IActionResult DeserializeData([FromBody] string serializedData)
+        {
+            // Do not use a BinaryFormatter to deserialize data from an untrusted source.
+            var memoryStream = new MemoryStream(Convert.FromBase64String(serializedData));
+            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        
+            // The following line is vulnerable to code execution attacks.
+            var deserializedObject = formatter.Deserialize(memoryStream); 
+        
+            return Ok(deserializedObject);
+        }
         [HttpGet("GetUserData/{username}")]
         public IActionResult GetUserData(string username)
         {
