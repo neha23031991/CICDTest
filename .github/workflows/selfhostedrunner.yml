@@ -16,16 +16,20 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    
+    # This is the manual step to add the .NET SDK to the runner's PATH
+    # It must be in every workflow file where you need to use dotnet
     - name: Set up .NET
       run: |
         echo "/home/actions-runner/.dotnet" >> $GITHUB_PATH
         echo "Successfully added .NET SDK to PATH"
         dotnet --version
-          with:
-            dotnet-version: 8.0.x
+    
     - name: Restore dependencies
       run: dotnet restore
+    
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
+    
+    - name: Run tests
       run: dotnet test --no-build --verbosity normal
